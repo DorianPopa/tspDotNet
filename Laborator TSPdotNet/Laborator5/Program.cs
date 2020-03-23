@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ModelCodeFirst
+namespace Laborator5
 {
     class Program
     {

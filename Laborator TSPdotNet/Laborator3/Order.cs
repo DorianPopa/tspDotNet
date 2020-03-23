@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelDesignFirst_L1
+namespace Laborator3
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class Order
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string TelephoneNumber { get; set; }
+        public int OrderId { get; set; }
+        public decimal TotalValue { get; set; }
+        public System.DateTime Date { get; set; }
+        public int CustomerCustomerId { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelDesignFirst_L1
+namespace Laborator3
 {
     class Program
     {

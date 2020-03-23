@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelDesignFirst_L1
+namespace Laborator3
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ModelManyToManyContainer : DbContext
+    public partial class ModelOneToManyContainer : DbContext
     {
-        public ModelManyToManyContainer()
-            : base("name=ModelManyToManyContainer")
+        public ModelOneToManyContainer()
+            : base("name=ModelOneToManyContainer")
         {
         }
     
@@ -25,7 +25,7 @@ namespace ModelDesignFirst_L1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Album> Albums { get; set; }
-        public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

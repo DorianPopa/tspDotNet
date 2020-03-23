@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelDesignFirst_L1
+namespace Laborator3
 {
     using System;
     using System.Data.Entity;

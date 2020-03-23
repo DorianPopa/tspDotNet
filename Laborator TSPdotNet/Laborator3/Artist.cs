@@ -7,24 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelDesignFirst_L1
+namespace Laborator3
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class Artist
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
+        public Artist()
         {
-            this.Orders = new HashSet<Order>();
+            this.Albums = new HashSet<Album>();
         }
     
-        public int CustomerId { get; set; }
-        public string Name { get; set; }
-        public string City { get; set; }
+        public int ArtistId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
     }
 }
