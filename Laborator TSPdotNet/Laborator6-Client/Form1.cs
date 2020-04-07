@@ -39,7 +39,6 @@ namespace Laborator6_Client
             dgc.DataSource = null;
             dgc.DataSource = posts[e.RowIndex].Comments;
         }
-
     }
 }
 
