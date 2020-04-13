@@ -59,7 +59,7 @@ namespace MyPhotosClientWCF
             //fileController.AddFile(workingFile);
             //fileSaved = true;
             PropertyList.Items.Clear();
-            currentPropertiesList = client.GetPropertiesForFileId(workingFile.Id);
+            currentPropertiesList = client.GetPropertiesForFileId(workingFile.Id).ToList();
             foreach (Property p in currentPropertiesList)
             {
                 ListViewItem currentPropertyRow = new ListViewItem(p.Title);

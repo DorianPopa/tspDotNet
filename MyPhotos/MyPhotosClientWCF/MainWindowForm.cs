@@ -33,7 +33,7 @@ namespace MyPhotosClientWCF
         internal void UpdateData()
         {
             FileList.Items.Clear();
-            fileList = client.GetAllNonDeletedFiles().ToArray();
+            fileList = client.GetAllNonDeletedFiles();
             fileList = fileList.OrderBy(e => e.CreatedAt).ToArray();
 
             fileList = FilterDataByActiveFilters(fileList.ToList()).ToArray();
@@ -66,7 +66,7 @@ namespace MyPhotosClientWCF
             List<MyPhotosClientWCF.File> fileList2 = new List<MyPhotosClientWCF.File>();
             foreach (MyPhotosClientWCF.File f in fileList)
             {
-                List<Property> fileProperties = client.GetPropertiesForFileId(f.Id);
+                List<Property> fileProperties = client.GetPropertiesForFileId(f.Id).ToList();
                 foreach (Property p in activeFilters)
                 {
                     Property foundProperty = fileProperties.Find(pr => pr.Id == p.Id);

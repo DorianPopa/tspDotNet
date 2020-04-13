@@ -31,7 +31,7 @@ namespace MyPhotosClientWCF
         internal void UpdateData()
         {
             PropertyList.Items.Clear();
-            allProperties = client.GetAllProperties();
+            allProperties = new List<MyPhotosClientWCF.Property>(client.GetAllProperties());
             foreach (Property p in allProperties)
             {
                 ListViewItem currentPropertyRow = new ListViewItem(p.Title);

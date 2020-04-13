@@ -28,6 +28,7 @@ namespace MyPhotos
 
         public PropertyController()
         {
+            Console.WriteLine("Called PropertyController constructor");
             InitializeDefaultProperties();
         }
 
@@ -41,6 +42,8 @@ namespace MyPhotos
         public void InitializeDefaultProperties()
         {
             Console.WriteLine("InitDefaultProperties called");
+            int saveResult = 0;
+
             for(int i = 0; i < _defaultProperties.Length; i++)
             {
                 string defaultPropertyName = _defaultProperties[i];
@@ -55,10 +58,14 @@ namespace MyPhotos
                         IsBase = true
                     };
                     Context.Properties.Add(property);
+                    saveResult += Context.SaveChanges();
+                }
+                else
+                {
+                    Console.WriteLine(@"Default property with name {0} already exists in the database", _defaultProperties[i]);
                 }
             }
-            int result = Context.SaveChanges();
-            if (result != _defaultProperties.Length + 1)
+            if (saveResult != _defaultProperties.Length + 1)
                 Console.WriteLine("Could not save default properties");
         }
 
