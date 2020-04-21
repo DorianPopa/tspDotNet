@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyPhotos;
 
-namespace MyPhotosClientWCF
+namespace MyPhotosClient
 {
     public partial class AddPropertyToFileForm : Form
     {
-        MyPhotosClient client;
+        PropertyController propertyController = new PropertyController();
+        FileController fileController = new FileController();
+        FilePropertyController filePropertyController = new FilePropertyController();
+
         AddNewFileForm parent;
 
         File workingFile = null;
@@ -14,12 +24,10 @@ namespace MyPhotosClientWCF
         List<Property> allProperties;
         ListViewItem currentlySelectedItem = null;
 
-        public AddPropertyToFileForm(AddNewFileForm Parent, File file, MyPhotosClient Client)
+        public AddPropertyToFileForm(AddNewFileForm Parent, File file)
         {
-            
             InitializeComponent();
             parent = Parent;
-            client = Client;
             InitializeData(file);
         }
 
@@ -32,7 +40,7 @@ namespace MyPhotosClientWCF
         internal void UpdateData()
         {
             PropertyList.Items.Clear();
-            allProperties = new List<MyPhotosClientWCF.Property>(client.GetAllProperties());
+            allProperties = propertyController.GetAllProperties();
             foreach (Property p in allProperties)
             {
                 ListViewItem currentPropertyRow = new ListViewItem(p.Title);
@@ -55,7 +63,7 @@ namespace MyPhotosClientWCF
 
         private void CreatePropertyButton_Click(object sender, EventArgs e)
         {
-            CreatePropertyForm createPropertyFrom = new CreatePropertyForm(this, client);
+            CreatePropertyForm createPropertyFrom = new CreatePropertyForm(this);
             createPropertyFrom.Show();
         }
 
@@ -69,11 +77,11 @@ namespace MyPhotosClientWCF
         private void AddPropertyButton_Click(object sender, EventArgs e)
         {
             string propertyValue = ValueTextBox.Text;
-            Property selectedProperty = client.GetPropertyByTitle(currentlySelectedItem.Text);
-            if (client.ValidateDataType(selectedProperty.Type, propertyValue))
+            Property selectedProperty = propertyController.GetPropertyByTitle(currentlySelectedItem.Text);
+            if (propertyController.ValidateDataType(selectedProperty.Type, propertyValue))
             {
-                FileProperty newFileProperty = client.CreateFileProperty(workingFile.Id, selectedProperty.Id, propertyValue);
-                client.AddFilePropertyToFile(newFileProperty);
+                FileProperty newFileProperty = filePropertyController.CreateFileProperty(workingFile.Id, selectedProperty.Id, propertyValue);
+                filePropertyController.AddFilePropertyToFile(newFileProperty);
                 parent.UpdateData();
             }
         }

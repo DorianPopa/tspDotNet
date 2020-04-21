@@ -1,46 +1,51 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyPhotos;
 
-namespace MyPhotosClientWCF
+namespace MyPhotosClient
 {
     public partial class MainWindowForm : Form
     {
-        MyPhotosClient client;
+        PropertyController propertyController = new PropertyController();
+        FileController fileController = new FileController();
+        FilePropertyController filePropertyController = new FilePropertyController();
 
-        MyPhotosClientWCF.File[] fileList;
-        MyPhotosClientWCF.Property[] propertyList;
+        MyPhotos.File[] fileList;
+        MyPhotos.Property[] propertyList;
 
         private OpenFileDialog openFileDialog;
-        private MyPhotosClientWCF.File workingFile = null;
-        private MyPhotosClientWCF.Property selectedProperty = null;
+        private MyPhotos.File workingFile = null;
+        private MyPhotos.Property selectedProperty = null;
         private int selectedPropertyIndexInList = 0;
         List<Property> activeFilters = new List<Property>();
 
         Image previewImage;
 
-        public MainWindowForm(MyPhotosClient Client)
+        public MainWindowForm()
         {
-            client = Client;
             InitializeComponent();
             UpdateData();
-
         }
 
         internal void UpdateData()
         {
             FileList.Items.Clear();
-            fileList = client.GetAllNonDeletedFiles();
+            fileList = fileController.GetAllNonDeletedFiles().ToArray();
             fileList = fileList.OrderBy(e => e.CreatedAt).ToArray();
 
             fileList = FilterDataByActiveFilters(fileList.ToList()).ToArray();
 
-            foreach(MyPhotosClientWCF.File f in fileList)
+            foreach(MyPhotos.File f in fileList)
             {
                 if(f.Deleted == false)
                 {
@@ -50,10 +55,10 @@ namespace MyPhotosClientWCF
                 }
             }
             PropertiesList.Items.Clear();
-            propertyList = client.GetAllProperties().ToArray();
+            propertyList = propertyController.GetAllProperties().ToArray();
             propertyList = propertyList.OrderBy(p => p.Id.ToString()).ToArray();
 
-            foreach(MyPhotosClientWCF.Property p in propertyList)
+            foreach(MyPhotos.Property p in propertyList)
             {
                 ListViewItem currentFilterRow = new ListViewItem(p.Title);
                 currentFilterRow.SubItems.Add(p.Description);
@@ -61,14 +66,14 @@ namespace MyPhotosClientWCF
             }
         }
 
-        private List<MyPhotosClientWCF.File> FilterDataByActiveFilters(List<MyPhotosClientWCF.File> fileList)
+        private List<MyPhotos.File> FilterDataByActiveFilters(List<MyPhotos.File> fileList)
         {
             if (activeFilters.Count == 0)
                 return fileList;
-            List<MyPhotosClientWCF.File> fileList2 = new List<MyPhotosClientWCF.File>();
-            foreach (MyPhotosClientWCF.File f in fileList)
+            List<MyPhotos.File> fileList2 = new List<MyPhotos.File>();
+            foreach (MyPhotos.File f in fileList)
             {
-                List<Property> fileProperties = client.GetPropertiesForFileId(f.Id).ToList();
+                List<Property> fileProperties = filePropertyController.GetPropertiesForFileId(f.Id);
                 foreach (Property p in activeFilters)
                 {
                     Property foundProperty = fileProperties.Find(pr => pr.Id == p.Id);
@@ -88,8 +93,8 @@ namespace MyPhotosClientWCF
                 {
                     var sr = new StreamReader(openFileDialog.FileName);
                     string fileData = sr.ReadToEnd();
-                    MyPhotosClientWCF.File workingFile = client.CreateNewFile(openFileDialog.FileName, openFileDialog.SafeFileName);
-                    AddNewFileForm newFileForm = new AddNewFileForm(workingFile, this, client);
+                    MyPhotos.File workingFile = fileController.CreateNewFile(openFileDialog.FileName, openFileDialog.SafeFileName);
+                    AddNewFileForm newFileForm = new AddNewFileForm(workingFile, this);
                     newFileForm.Show();
                 }
                 catch (SecurityException ex)
@@ -113,14 +118,14 @@ namespace MyPhotosClientWCF
 
         private void DeleteFileButton_Click(object sender, EventArgs e)
         {
-            bool result = client.DeleteFile(workingFile.Id);
+            bool result = fileController.DeleteFile(workingFile.Id);
             PicturePreview.Image = null;
             UpdateData();
         }
 
         private void EditFileButton_Click(object sender, EventArgs e)
         {
-            AddNewFileForm editFileForm = new AddNewFileForm(workingFile, this, client);
+            AddNewFileForm editFileForm = new AddNewFileForm(workingFile, this);
             editFileForm.fileSaved = true;
             editFileForm.Show();
         }

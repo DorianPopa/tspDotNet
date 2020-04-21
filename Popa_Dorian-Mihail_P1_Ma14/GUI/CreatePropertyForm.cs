@@ -1,19 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyPhotos;
 
-namespace MyPhotosClientWCF
+namespace MyPhotosClient
 {
     public partial class CreatePropertyForm : Form
     {
-        MyPhotosClient client;
+        PropertyController propertyController = new PropertyController();
         AddPropertyToFileForm ParentForm;
 
-        public CreatePropertyForm(AddPropertyToFileForm parentForm, MyPhotosClient Client)
+        public CreatePropertyForm(AddPropertyToFileForm parentForm)
         {
             InitializeComponent();
             ParentForm = parentForm;
-            client = Client;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -28,8 +34,8 @@ namespace MyPhotosClientWCF
             else if (type == "Number") type = "int";
             else if (type == "Date, in (dd/mm/yyyy) format") type = "DateTime";
 
-            Property newProperty = client.CreateProperty(TitleTextBox.Text, DescriptionTextBox.Text, type);
-            client.AddProperty(newProperty);
+            Property newProperty = propertyController.CreateProperty(TitleTextBox.Text, DescriptionTextBox.Text, type);
+            propertyController.AddProperty(newProperty);
             ParentForm.UpdateData();
             this.Close();
         }

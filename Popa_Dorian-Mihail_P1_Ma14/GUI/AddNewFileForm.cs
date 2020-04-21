@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MyPhotosClientWCF;
+using MyPhotos;
 
-namespace MyPhotosClientWCF
+namespace MyPhotosClient
 {
     public partial class AddNewFileForm : Form
     {
-        MyPhotosClient client;
+        PropertyController propertyController = new PropertyController();
+        FileController fileController = new FileController();
+        FilePropertyController filePropertyController = new FilePropertyController();
 
         private Bitmap currentPictureBitmap;
         private string fileName;
@@ -25,11 +27,11 @@ namespace MyPhotosClientWCF
         private List<Property> currentPropertiesList;
         private MainWindowForm parentReference;
 
-        public AddNewFileForm(File file, MainWindowForm parent, MyPhotosClient Client)
+        public AddNewFileForm(File file, MainWindowForm parent)
         {
-            InitializeComponent();
             parentReference = parent;
-            client = Client;
+            InitializeComponent();
+
             ImportDataFromFile(file);
         }
 
@@ -59,14 +61,14 @@ namespace MyPhotosClientWCF
             //fileController.AddFile(workingFile);
             //fileSaved = true;
             PropertyList.Items.Clear();
-            currentPropertiesList = client.GetPropertiesForFileId(workingFile.Id).ToList();
+            currentPropertiesList = filePropertyController.GetPropertiesForFileId(workingFile.Id);
             foreach (Property p in currentPropertiesList)
             {
                 ListViewItem currentPropertyRow = new ListViewItem(p.Title);
                 currentPropertyRow.SubItems.Add(p.Type);
                 currentPropertyRow.SubItems.Add(p.Description);
 
-                string propertyValue = client.GetValueByFileIdAndPropertyId(workingFile.Id, p.Id);
+                string propertyValue = filePropertyController.GetValueByFileIdAndPropertyId(workingFile.Id, p.Id);
 
                 currentPropertyRow.SubItems.Add(propertyValue);
                 PropertyList.Items.Add(currentPropertyRow);
@@ -75,10 +77,10 @@ namespace MyPhotosClientWCF
 
         private void SubmitFileButton_Click(object sender, EventArgs e)
         {
-            if(client.GetFileById(workingFile.Id) == null)
+            if(fileController.GetFileById(workingFile.Id) == null)
             {
                 workingFile.Name = FileNameTextBox.Text;
-                client.AddFile(workingFile);
+                fileController.AddFile(workingFile);
                 fileSaved = true;
             }
             parentReference.UpdateData();
@@ -89,7 +91,7 @@ namespace MyPhotosClientWCF
         {
             if (fileSaved)
             {
-                AddPropertyToFileForm addPropertyForm = new AddPropertyToFileForm(this, workingFile, client);
+                AddPropertyToFileForm addPropertyForm = new AddPropertyToFileForm(this, workingFile);
                 addPropertyForm.Show();
             }
             else
@@ -98,9 +100,9 @@ namespace MyPhotosClientWCF
                 if (dialogResult == DialogResult.Yes)
                 {
                     workingFile.Name = FileNameTextBox.Text;
-                    client.AddFile(workingFile);
+                    fileController.AddFile(workingFile);
                     fileSaved = true;
-                    AddPropertyToFileForm addPropertyForm = new AddPropertyToFileForm(this, workingFile, client);
+                    AddPropertyToFileForm addPropertyForm = new AddPropertyToFileForm(this, workingFile);
                     addPropertyForm.Show();
                 }
             }
