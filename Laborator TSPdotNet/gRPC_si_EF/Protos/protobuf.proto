@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPC_si_EF";
+
+package PostCommentServiceServer;
+
+service PostCommentService {
+	rpc CreatePost (Post) returns (Post);
+	rpc GetAllPosts (empty) returns (PostList);
+	rpc GetPostById (int) returns (Post);
+	rpc DeletePost (int) returns (empty);
+	rpc UpdatePost (Post) returns (Post);
+
+	rpc AddComment (CommentProto) returns (CommentProto);
+	rpc UpdateComment (CommentProto) returns (CommentProto);
+	rpc GetCommentById (int) returns (CommentProto);
+}
+
+message PostProto {
+	System.Guid PostId = 1;
+	string Description = 2;
+	string Domain = 3;
+	System.DateTime Date = 4;
+}
+
+message PostListProto {
+	repeated PostProto data = 1;
+}
+
+message CommentProto {
+	System.Guid CommentId = 1;
+	string Text = 2;
+	System.Guid PostId = 3;
+}
