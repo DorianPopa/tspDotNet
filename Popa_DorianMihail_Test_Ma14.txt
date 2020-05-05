@@ -1,0 +1,36 @@
+R1. Controalele pot fi pentru afisare text (Label), de tip buton (RadioButton) sau de tip colectie (TreeView). 
+R2. Controlul ListView poate afisa continutul in urmatoarele moduri: LargeIcon, Details, SmallIcon, List, Tile.
+R3. Un control CheckBox poate avea urmatoarele stari: Checked, Unchecked si stare-intermediara (nedeterminata).
+R4. Proprietatea readonly = true previne editarea continutului TextBoxului. Disabled previne afisarea TextBoxului in form.
+R5. Clasele care implementeaza modelul conectat: Connection, Command, DataReader, DataAdapter. Clasele care implementeaza modelul deconectat: DataTable, DataRelation.
+R6. DataReader este folosit pentru operatii de citire pe baza de date, DataAdapter este folosit pentru operatii de actualizare a bazei de date. DataReader nu suporta operatiile de update si returneaza valori read-only bazate pe un cursor iterabil.
+R7. 
+R8. 
+    var query = from client in context.Clients
+    where client.ClientId == 10 select client;
+    var single = query.First();
+    ct.Entry(single).Collection(c => c.Orders).Load();
+R9. 
+    var query = from client in context.Clients
+    where client.ClientId == 10 select client;
+    query.Include(ct=>ct.Orders);
+    foreach(var c in query){    // lazyloading odata cu foreach
+        // ... irelevant 
+    }
+R10. 
+R11. 
+    // se face un update pe baza de date care modifica cel putin o entitate.
+    // modifiedEntries memoreaza entitatile modificate in urma apelului anterior.
+    var modifiedEntries = context.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
+    foreach(var e in modifiedEntries){
+        // ... irelevant
+    }
+R12. Cererile pot fi:  oneway, duplex, sincrone, asincrone.
+R13. Field-urile proprietatii InstanceContextMode sunt: Single (singleton, creat o singura data), PerCall (instanta noua pentru fiecare apel) si PerSession (instanta noua la fiecare sesiune a canalului)
+R14. Interfata IMetadataExchange este folosita pentru expunerea datelor despre un serviciu. Expune metodele si tipurile de date folosite de un serviciu.
+R15. BasicHttpBinding nu suporta comunicare bidirectionala
+R16. 
+R17. Adresa, Binding si Contract
+R18. Apelul .Remove sterge si relatiile asociate entitatii sterse. Setarea proprietatii State in EntityState.Deleted marcheaza stergerea entitatii fara a marca si stergerea eventualelor relatii de asociere.
+R19. Contracte pentru servicii [ServiceContract], Contracte de date [DataContract], Contracte pentru erori [FaultContract], Contracte pentru mesaje [MessageContract]
+R20. HTTP, TCP, Peer network, Comunicare intre procese prin pipe-uri cu nume, MSMQ
