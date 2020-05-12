@@ -1,0 +1,18 @@
+﻿{
+  "ProviderId": "Microsoft.VisualStudio.ConnectedService.Wcf",
+  "Version": "15.0.30730.948",
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:8000/PC"
+    ],
+    "collectionTypes": [
+      "System.Collections.Generic.Dictionary`2",
+      "System.Collections.Generic.List`1"
+    ],
+    "namespaceMappings": [
+      "*, ServiceReferencePostComment"
+    ],
+    "targetFramework": "netcoreapp3.0",
+    "typeReuseMode": "All"
+  }
+}

@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laborator7-GrpcGreeterClien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gRPC_si_EF", "gRPC_si_EF\gRPC_si_EF.csproj", "{2EE36BCD-8FB5-41D9-B842-82B9229621D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesPostComment", "RazorPagesPostComment\RazorPagesPostComment.csproj", "{B2A982E5-B33E-455C-A071-0E86C8A7149B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{2EE36BCD-8FB5-41D9-B842-82B9229621D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE36BCD-8FB5-41D9-B842-82B9229621D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE36BCD-8FB5-41D9-B842-82B9229621D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A982E5-B33E-455C-A071-0E86C8A7149B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A982E5-B33E-455C-A071-0E86C8A7149B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A982E5-B33E-455C-A071-0E86C8A7149B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A982E5-B33E-455C-A071-0E86C8A7149B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
