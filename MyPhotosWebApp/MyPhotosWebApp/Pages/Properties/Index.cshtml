@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 <p>
-    <a asp-page="Create" asp-route="@Model.fileId">Create New Property</a>
+    <a asp-page="../Properties/Create" asp-route-id="@Model.fileId">Add New Property to this Image</a>
 </p>
 <h1>Properties for: @Model.fileName</h1>
 <table class="table">
@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Properties[0].Type)
             </th>
             <th>
-                Value
+                Property Value
             </th>
             <th></th>
         </tr>

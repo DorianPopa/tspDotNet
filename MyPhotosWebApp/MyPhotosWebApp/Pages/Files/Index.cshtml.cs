@@ -27,19 +27,28 @@ namespace MyPhotosWebApp.Pages.Files
 
         public async Task OnGetAsync()
         {
-            var allProperties = await client.GetAllPropertiesAsync();
-            foreach(Property p in allProperties)
+            MockData data = new MockData();
+
+            //var allProperties = await client.GetAllPropertiesAsync();
+            var allProperties = data.GetAllProperties();
+
+            searchableProperties = new List<string>();
+            foreach (Property p in allProperties)
             {
                 searchableProperties.Add(p.Title);
             }
             filterPropertyList = new SelectList(searchableProperties);
 
-            var allFiles = await client.GetAllFilesAsync();
+            //var allFiles = await client.GetAllFilesAsync();
+            var allFiles = data.GetAllFiles();
+
             foreach(File file in allFiles)
             {
                 FileDTO fileDTO = new FileDTO(file);
-                var propertiesForFile = await client.GetPropertiesForFileIdAsync(file.Id);
-
+              
+                //var propertiesForFile = await client.GetPropertiesForFileIdAsync(file.Id);
+                var propertiesForFile = data.GetAllPropertiesForFileId(file.Id);
+                
                 bool matchedBySearch = false;
                 foreach(Property property in propertiesForFile)
                 {
