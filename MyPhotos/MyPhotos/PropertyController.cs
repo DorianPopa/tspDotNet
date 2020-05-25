@@ -29,7 +29,7 @@ namespace MyPhotos
         public PropertyController()
         {
             Console.WriteLine("Called PropertyController constructor");
-            InitializeDefaultProperties();
+            //InitializeDefaultProperties();
         }
 
         public Property CreateProperty(string title, string description, string type)
