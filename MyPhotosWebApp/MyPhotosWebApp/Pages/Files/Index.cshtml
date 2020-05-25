@@ -1,0 +1,53 @@
+﻿@page
+@model MyPhotosWebApp.Pages.Files.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Files</h1>
+<form>
+    <p>
+        Property
+        <select asp-for="SearchString" asp-items="Model.filterPropertyList">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<p>Found @Model.searchResults files with the selected property!</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Path)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Files)
+        {
+            <tr style="font-size:small">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Path)
+                </td>
+                <td>
+                    <a asp-page="../Properties/Index" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Index</h1>
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<h1>Properties for: @Model.fileName</h1>
 <table class="table">
     <thead>
         <tr>
@@ -23,35 +23,29 @@
                 @Html.DisplayNameFor(model => model.Properties[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Properties[0].FileProperties)
+                Value
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Properties)
+        @foreach (var item in Model.PropertyValuePairs)
         {
             <tr style="font-size:small">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Key.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => item.Key.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Key.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => item.Key.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FileProperties.Count)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="/Comments/List" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-page="/Comments/Create" asp-route-id="@item.Id">Add a Comment</a>
+                    @Html.DisplayFor(modelItem => item.Value)
                 </td>
             </tr>
         }

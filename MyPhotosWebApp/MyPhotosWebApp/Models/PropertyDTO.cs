@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceReferenceWCF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,15 @@ namespace MyPhotosWebApp.Models
         public PropertyDTO()
         {
             this.FileProperties = new HashSet<FilePropertyDTO>();
+        }
+
+        public PropertyDTO(Property property)
+        {
+            Id = property.Id;
+            Title = property.Title;
+            Description = property.Description;
+            Type = property.Type;
+            IsBase = property.IsBase;
         }
 
         public System.Guid Id { get; set; }

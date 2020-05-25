@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiceReferenceWCF;
 using MyPhotosWebApp.Models;
@@ -11,33 +9,39 @@ namespace MyPhotosWebApp.Pages.Properties
 {
     public class IndexModel : PageModel
     {
-        MyPhotosClient client = new MyPhotosClient();
         public List<PropertyDTO> Properties { get; set; }
+        public List<KeyValuePair<PropertyDTO, string>> PropertyValuePairs;
+        MyPhotosClient client = new MyPhotosClient();
+        public string fileName { get; set; }
+        
 
         public IndexModel()
         {
             Properties = new List<PropertyDTO>();
+            PropertyValuePairs = new List<KeyValuePair<PropertyDTO, string>>();
         }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(Guid? id)
         {
-            var properties = await client.GetAllPropertiesAsync();
-            foreach(var property in properties)
+            if (id == null) return;
+
+
+            Guid fileId = id.GetValueOrDefault();
+            File file = await client.GetFileByIdAsync(fileId);
+            FileDTO fileDTO = new FileDTO(file);
+            fileName = fileDTO.Name;
+
+            List<Property> propertiesForFile = await client.GetPropertiesForFileIdAsync(fileId);
+            foreach(Property property in propertiesForFile)
             {
-                PropertyDTO pDTO = new PropertyDTO();
-                pDTO.Title = property.Title;
-                pDTO.Description = property.Description;
-                pDTO.Type = property.Type;
-                foreach(FileProperty fp in property.FileProperties)
-                {
-                    FilePropertyDTO fpDTO = new FilePropertyDTO();
-                    fpDTO.FileId = fp.FileId;
-                    fpDTO.PropertyId = fp.PropertyId;
-                    fpDTO.Value = fpDTO.Value;
-                    pDTO.FileProperties.Add(fpDTO);
-                }
-                Properties.Add(pDTO);
+                PropertyDTO propertyDTO = new PropertyDTO(property);
+                Properties.Add(propertyDTO);
+                string propertyValue = await client.GetValueByFileIdAndPropertyIdAsync(fileId, property.Id);
+
+                KeyValuePair<PropertyDTO, string> keyValuePair = KeyValuePair.Create<PropertyDTO, string>(propertyDTO, propertyValue);
+                PropertyValuePairs.Add(keyValuePair);
+
             }
-            Properties.Sort((p1, p2) => string.Compare(p1.Title, p2.Title));
+            PropertyValuePairs.Sort((item1, item2) => string.Compare(item1.Key.Title, item2.Key.Title));
         }
     }
 }
