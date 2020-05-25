@@ -13,6 +13,7 @@ namespace MyPhotosWebApp.Pages.Properties
         public List<KeyValuePair<PropertyDTO, string>> PropertyValuePairs;
         MyPhotosClient client = new MyPhotosClient();
         public string fileName { get; set; }
+        public Guid fileId { get; set; }
         
 
         public IndexModel()
@@ -25,7 +26,7 @@ namespace MyPhotosWebApp.Pages.Properties
             if (id == null) return;
 
 
-            Guid fileId = id.GetValueOrDefault();
+            fileId = id.GetValueOrDefault();
             File file = await client.GetFileByIdAsync(fileId);
             FileDTO fileDTO = new FileDTO(file);
             fileName = fileDTO.Name;

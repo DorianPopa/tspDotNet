@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,13 +9,18 @@ namespace MyPhotosWebApp.Pages.Properties
 {
     public class CreateModel : PageModel
     {
-        MyPhotosClient client = new MyPhotosClient();
+        public MyPhotosClient client = new MyPhotosClient();
+        public Guid fileId { get; set; }
 
         [BindProperty]
         public PropertyDTO PropertyDTO { get; set; }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public string Value { get; set; }
+
+        public IActionResult OnGet(Guid? id)
         {
+            fileId = id.GetValueOrDefault();
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -35,6 +38,13 @@ namespace MyPhotosWebApp.Pages.Properties
             {
                 return RedirectToAction("Error");
             }
+
+            var result2 = await client.CreateFilePropertyAsync(fileId, result.Id, Value);
+            if (result2 == null)
+            {
+                return RedirectToAction("Error");
+            }
+
             return RedirectToPage("./Index");
         }
     }
