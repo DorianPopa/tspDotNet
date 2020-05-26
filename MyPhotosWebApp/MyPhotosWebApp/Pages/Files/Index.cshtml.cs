@@ -13,16 +13,16 @@ namespace MyPhotosWebApp.Pages.Files
         public List<FileDTO> Files { get; set; }
         public MyPhotosClient client = new MyPhotosClient();
 
-        public List<string> searchableProperties { get; set; }
-        public SelectList filterPropertyList { get; set; }
+        public List<string> SearchableProperties { get; set; }
+        public SelectList FilterPropertyList { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
-        public int searchResults { get; set; }
+        public int SearchResults { get; set; }
 
         public IndexModel()
         {
             Files = new List<FileDTO>();
-            searchResults = 0;
+            SearchResults = 0;
         }
 
         public async Task OnGetAsync()
@@ -32,12 +32,12 @@ namespace MyPhotosWebApp.Pages.Files
             //var allProperties = await client.GetAllPropertiesAsync();
             var allProperties = data.GetAllProperties();
 
-            searchableProperties = new List<string>();
+            SearchableProperties = new List<string>();
             foreach (Property p in allProperties)
             {
-                searchableProperties.Add(p.Title);
+                SearchableProperties.Add(p.Title);
             }
-            filterPropertyList = new SelectList(searchableProperties);
+            FilterPropertyList = new SelectList(SearchableProperties);
 
             //var allFiles = await client.GetAllFilesAsync();
             var allFiles = data.GetAllFiles();
@@ -58,7 +58,7 @@ namespace MyPhotosWebApp.Pages.Files
                     Files.Add(fileDTO);
                 }
             }
-            searchResults = Files.Count;
+            SearchResults = Files.Count;
         }
     }
 }

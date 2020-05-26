@@ -4,8 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-<h4>Property</h4>
+<h1>Add a Property</h1>
+<h4>Create a new property and add it to this file</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,6 +25,11 @@
                 <label asp-for="PropertyDTO.Type" class="control-label"></label>
                 <input asp-for="PropertyDTO.Type" class="form-control" />
                 <span asp-validation-for="PropertyDTO.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Value" class="control-label"></label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

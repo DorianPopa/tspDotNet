@@ -8,13 +8,13 @@
 <form>
     <p>
         Property
-        <select asp-for="SearchString" asp-items="Model.filterPropertyList">
+        <select asp-for="SearchString" asp-items="Model.FilterPropertyList">
             <option value="">All</option>
         </select>
         <input type="submit" value="Filter" />
     </p>
 </form>
-<p>Found @Model.searchResults files with the selected property!</p>
+<p>Found @Model.SearchResults files with the selected property!</p>
 <table class="table">
     <thead>
         <tr>
@@ -28,7 +28,9 @@
                 @Html.DisplayNameFor(model => model.Files[0].Path)
             </th>
 
-            <th></th>
+            <th>
+                Properties
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Path)
                 </td>
                 <td>
-                    <a asp-page="../Properties/Index" asp-route-id="@item.Id">Details</a>
+                    <a asp-page="../Properties/Index" asp-route-id="@item.Id">See</a>
                 </td>
             </tr>
         }
