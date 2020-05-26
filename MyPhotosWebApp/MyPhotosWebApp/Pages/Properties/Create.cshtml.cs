@@ -10,7 +10,7 @@ namespace MyPhotosWebApp.Pages.Properties
     public class CreateModel : PageModel
     {
         public MyPhotosClient client = new MyPhotosClient();
-        public Guid fileId { get; set; }
+        public Guid FileId { get; set; }
 
         [BindProperty]
         public PropertyDTO PropertyDTO { get; set; }
@@ -18,9 +18,9 @@ namespace MyPhotosWebApp.Pages.Properties
         [BindProperty]
         public string Value { get; set; }
 
-        public IActionResult OnGet(Guid? id)
+        public async Task<IActionResult> OnGet(Guid? id)
         {
-            fileId = id.GetValueOrDefault();
+            FileId = id.GetValueOrDefault();
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -29,6 +29,7 @@ namespace MyPhotosWebApp.Pages.Properties
             {
                 return Page();
             }
+           
             Property property = new Property();
             property.Title = PropertyDTO.Title;
             property.Description = PropertyDTO.Description;
@@ -39,7 +40,7 @@ namespace MyPhotosWebApp.Pages.Properties
                 return RedirectToAction("Error");
             }
 
-            var result2 = await client.CreateFilePropertyAsync(fileId, result.Id, Value);
+            var result2 = await client.CreateFilePropertyAsync(FileId, result.Id, Value);
             if (result2 == null)
             {
                 return RedirectToAction("Error");

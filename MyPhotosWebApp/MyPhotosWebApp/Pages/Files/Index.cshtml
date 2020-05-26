@@ -7,14 +7,13 @@
 <h1>Files</h1>
 <form>
     <p>
-        Property
+        Find files with this property:
         <select asp-for="SearchString" asp-items="Model.FilterPropertyList">
-            <option value="">All</option>
+            <option value="">All Files</option>
         </select>
         <input type="submit" value="Filter" />
     </p>
 </form>
-<p>Found @Model.SearchResults files with the selected property!</p>
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +26,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Files[0].Path)
             </th>
-
             <th>
                 Properties
             </th>
@@ -53,3 +51,14 @@
         }
     </tbody>
 </table>
+<br />
+@if (Model.SearchResults == 1)
+{
+    <p>Found @Model.SearchResults file with the selected property!</p>
+}
+else
+{
+    <p>Found @Model.SearchResults files with the selected property!</p>
+}
+
+
