@@ -45,11 +45,11 @@ namespace MyPhotosWebApp.Pages.Properties
                 //string propertyValue = await client.GetValueByFileIdAndPropertyIdAsync(fileId, property.Id);
                 string propertyValue = data.GetValueByFileIdAndPropertyId(fileId, property.Id);
 
-                KeyValuePair<PropertyDTO, string> keyValuePair = KeyValuePair.Create<PropertyDTO, string>(propertyDTO, propertyValue);
+                KeyValuePair<PropertyDTO, string> keyValuePair = KeyValuePair.Create(propertyDTO, propertyValue);
                 PropertyValuePairs.Add(keyValuePair);
 
             }
-            PropertyValuePairs.Sort((item1, item2) => string.Compare(item1.Key.Title, item2.Key.Title));
+            PropertyValuePairs.Sort((item1, item2) => string.Compare(item1.Key.Title, item2.Key.Title));    // alphabetical sorting of the property list
         }
     }
 }
