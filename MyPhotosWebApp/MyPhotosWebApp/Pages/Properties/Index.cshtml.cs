@@ -27,16 +27,13 @@ namespace MyPhotosWebApp.Pages.Properties
             MockData data = new MockData();
 
             fileId = id.GetValueOrDefault();
-
             //File file = await client.GetFileByIdAsync(fileId);
             File file = data.GetFileById(fileId);
-
             FileDTO fileDTO = new FileDTO(file);
             fileName = fileDTO.Name;
 
             //List<Property> propertiesForFile = await client.GetPropertiesForFileIdAsync(fileId);
             List<Property> propertiesForFile = data.GetAllPropertiesForFileId(fileId);
-
             foreach (Property property in propertiesForFile)
             {
                 PropertyDTO propertyDTO = new PropertyDTO(property);

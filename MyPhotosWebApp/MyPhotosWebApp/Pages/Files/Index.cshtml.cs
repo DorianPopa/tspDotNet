@@ -40,8 +40,7 @@ namespace MyPhotosWebApp.Pages.Files
             FilterPropertyList = new SelectList(SearchableProperties);
 
             //var allFiles = await client.GetAllFilesAsync();
-            var allFiles = data.GetAllFiles();
-
+            List<File> allFiles = data.GetAllFiles();
             foreach(File file in allFiles)
             {
                 FileDTO fileDTO = new FileDTO(file);
