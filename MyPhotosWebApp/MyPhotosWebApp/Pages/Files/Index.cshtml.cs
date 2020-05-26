@@ -45,28 +45,20 @@ namespace MyPhotosWebApp.Pages.Files
             foreach(File file in allFiles)
             {
                 FileDTO fileDTO = new FileDTO(file);
-              
-                //var propertiesForFile = await client.GetPropertiesForFileIdAsync(file.Id);
-                var propertiesForFile = data.GetAllPropertiesForFileId(file.Id);
-                
-                bool matchedBySearch = false;
-                foreach(Property property in propertiesForFile)
+                List<Property> propertiesOfFile = data.GetAllPropertiesForFileId(file.Id);
+                if (!string.IsNullOrEmpty(SearchString))
                 {
-                    PropertyDTO propertyDTO = new PropertyDTO(property);
-                    if (!string.IsNullOrEmpty(SearchString))
+                    if (propertiesOfFile.Find(p => p.Title.Equals(SearchString)) != null)
                     {
-                        if (propertyDTO.Title == SearchString)
-                            matchedBySearch = true;
+                        Files.Add(fileDTO);
                     }
-                    else
-                        matchedBySearch = true;
                 }
-                if (matchedBySearch)
+                else
                 {
-                    searchResults++;
                     Files.Add(fileDTO);
                 }
             }
+            searchResults = Files.Count;
         }
     }
 }
