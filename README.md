@@ -1,2 +1,3 @@
 # tspDotNet
-Repo for TSP .NET 3rd year
+
+Reposotiry for TSP .NET 3rd year university course.
